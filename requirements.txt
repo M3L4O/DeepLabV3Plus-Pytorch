@@ -1,5 +1,5 @@
 torch
-torchvision
+torchvision==0.2.2
 numpy
 pillow
 scikit-learn
