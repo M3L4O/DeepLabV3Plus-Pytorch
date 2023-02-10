@@ -1,25 +1,15 @@
 from tqdm import tqdm
 import network
-import utils
-import os
-import random
 import argparse
 import numpy as np
 from os import path as ph
 
-from torch.utils import data
 from datasets.data import SegmentationDataSet
-from utils import ext_transforms as et
 from utils.engine import Engine
-from metrics import StreamSegMetrics
 
 
 import torch
-import torch.nn as nn
 from torch.utils.data import DataLoader
-from PIL import Image
-import matplotlib
-import matplotlib.pyplot as plt
 
 from torchmetrics import Dice, JaccardIndex
 
@@ -41,12 +31,24 @@ def get_argparser():
         help="Caminho para a pasta contendo os CSVs.",
     )
     parser.add_argument(
-        "--image_column", type=str, help="Coluna contendo o ID da imagem."
+        "--image_column",
+        type=str,
+        default="image_id",
+        help="Coluna contendo o ID da imagem.",
     )
 
-    parser.add_argument("--image_sufix", type=str, help="Sufixo para a imagem.")
-    parser.add_argument("--mask_sufix", type=str, help="Sufixo para a máscara.")
-    parser.add_argument("--image_size", type=int, help="Tamanho da imagem.")
+    parser.add_argument(
+        "--image_sufix", default=".jpg", type=str, help="Sufixo para a imagem."
+    )
+    parser.add_argument(
+        "--mask_sufix",
+        default="_segmentation.png",
+        type=str,
+        help="Sufixo para a máscara.",
+    )
+    parser.add_argument(
+        "--image_size", default=224, type=int, help="Tamanho da imagem."
+    )
     parser.add_argument(
         "--model_path", type=str, help="Caminho até onde o modelo ficará salvo."
     )
